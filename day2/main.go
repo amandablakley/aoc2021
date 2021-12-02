@@ -17,7 +17,7 @@ func main() {
 	}
 
 	partOne(input)
-	// partTwo(input)
+	partTwo(input)
 }
 
 func partOne(input []byte) {
