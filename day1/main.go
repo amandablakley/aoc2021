@@ -51,10 +51,10 @@ func partTwo(input []byte) {
 			continue
 		}
 
-		windowSum := intDepths[i] + intDepths[i+1] + intDepths[i-1]
-		nextWindow := intDepths[i] + intDepths[i-1] + intDepths[i-2]
+		currentWindow := intDepths[i] + intDepths[i-1] + intDepths[i-2]
+		nextWindow := intDepths[i] + intDepths[i+1] + intDepths[i-1]
 
-		if windowSum > nextWindow {
+		if currentWindow < nextWindow {
 			larger++
 		}
 
@@ -73,16 +73,6 @@ func convertInt(input []string) []int {
 	}
 
 	return number
-}
-
-func getSum(input []int) int {
-	sum := 0
-
-	for _, v := range input {
-		sum += v
-	}
-
-	return sum
 }
 
 func getInput() ([]byte, error) {
