@@ -16,64 +16,69 @@ func main() {
 		return
 	}
 
-	partOne(input)
-	partTwo(input)
+	fmt.Println(partOne(input))
+	fmt.Println(partTwo(input))
 }
 
-func partOne(input []byte) {
-	increment := 0
-	seaDepths := strings.Split(string(input), "\n")
-	intDepths := convertInt(seaDepths)
+func partOne(input []byte) int {
+	inputString := strings.Split(string(input), "\n")
+	horizontalPos := 0
+	depth := 0
 
-	for i := 0; i < len(intDepths)-1; i++ {
-		if i == 0 {
+	for _, line := range inputString {
+		if line == "" {
 			continue
 		}
 
-		next := seaDepths[i]
-		previous := seaDepths[i-1]
-		incremented := next > previous
+		newString := strings.Split(line, " ")
+		direction := newString[0]
+		x, _ := strconv.Atoi(newString[1])
 
-		if incremented {
-			increment++
+		switch direction {
+		case "forward":
+			horizontalPos += x
+		case "up":
+			depth -= x
+		case "down":
+			depth += x
+		default:
+			//do nothing
 		}
 	}
 
-	fmt.Println("Part One:", increment, "increments")
+	return horizontalPos * depth
 }
 
-func partTwo(input []byte) {
-	larger := 0
-	seaDepths := strings.Split(string(input), "\n")
-	intDepths := convertInt(seaDepths)
+func partTwo(input []byte) int {
+	inputString := strings.Split(string(input), "\n")
+	horizontalPos := 0
+	depth := 0
+	aim := 0
 
-	for i := 2; i < len(intDepths)-1; i++ {
-		if i == 0 || intDepths[i] == 0 {
+	for _, line := range inputString {
+		if line == "" {
 			continue
 		}
 
-		currentWindow := intDepths[i] + intDepths[i-1] + intDepths[i-2]
-		nextWindow := intDepths[i] + intDepths[i+1] + intDepths[i-1]
+		newString := strings.Split(line, " ")
+		direction := newString[0]
+		x, _ := strconv.Atoi(newString[1])
 
-		if currentWindow < nextWindow {
-			larger++
+		switch direction {
+		case "forward":
+			horizontalPos += x
+			depth += aim * x
+		case "up":
+			aim -= x
+		case "down":
+			aim += x
+		default:
+			// do nothing
 		}
 
 	}
 
-	fmt.Println("Part Two:", larger, "larger")
-
-}
-
-func convertInt(input []string) []int {
-	number := []int{}
-
-	for _, n := range input {
-		i, _ := strconv.Atoi(n)
-		number = append(number, i)
-	}
-
-	return number
+	return horizontalPos * depth
 }
 
 func getInput() ([]byte, error) {
