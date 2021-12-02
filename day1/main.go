@@ -24,7 +24,7 @@ func partOne(input []byte) {
 	increment := 0
 	seaDepths := strings.Split(string(input), "\n")
 
-	for i := 0; i < len(seaDepths); i++ {
+	for i := 0; i < len(seaDepths)-1; i++ {
 		if i == 0 || seaDepths[i] == "" {
 			continue
 		}
@@ -46,15 +46,15 @@ func partTwo(input []byte) {
 	seaDepths := strings.Split(string(input), "\n")
 	intDepths := convertInt(seaDepths)
 
-	for i := 0; i < len(intDepths); i++ {
-		if i == 0 || i+3 >= len(intDepths) || intDepths[i] == 0 {
+	for i := 2; i < len(intDepths)-1; i++ {
+		if i == 0 || intDepths[i] == 0 {
 			continue
 		}
 
-		windowSum := intDepths[i] + intDepths[i+1] + intDepths[i+2]
-		nextWindow := intDepths[i+1] + intDepths[i+2] + intDepths[i+3]
+		windowSum := intDepths[i] + intDepths[i+1] + intDepths[i-1]
+		nextWindow := intDepths[i] + intDepths[i-1] + intDepths[i-2]
 
-		if windowSum < nextWindow {
+		if windowSum > nextWindow {
 			larger++
 		}
 
